@@ -23,8 +23,6 @@
         h2 {
             text-align: center;
         }
-
-        input,
         button {
             padding: 10px;
             margin: 8px 0;
@@ -70,9 +68,8 @@
 <body>
 
     <div class="card">
-        <h2>Marksheet Generator</h2>
-
-        <!-- Only 3 inputs -->
+        <h2>Marksheet </h2>
+        
         <input id="name" placeholder="Enter Name">
         <input id="class" placeholder="Enter Class">
         <input id="roll" placeholder="Enter Roll No">
@@ -82,7 +79,7 @@
     </div>
 
     <script>
-        // Sample data (Roll based)
+     
         const records = [
             { name: "Mudassir Ali Khan", class: "10", roll: "1014", marks: { Math: 85, English: 78, Science: 90 } },
             { name: "Ali Raza", class: "9", roll: "1001", marks: { Math: 72, English: 80, Science: 65 } },
@@ -97,7 +94,6 @@
             const cls = document.getElementById("class").value.trim();
             const roll = document.getElementById("roll").value.trim();
 
-            // Search by Roll or Name
             const student = records.find(s => s.roll === roll || s.name.toLowerCase() === name);
 
             if (!student) {
@@ -127,5 +123,6 @@
     </script>
 
 </body>
+
 
 </html>
