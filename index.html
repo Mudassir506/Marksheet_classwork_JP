@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>3 Input Marksheet</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f6f8fb;
+            padding: 20px;
+        }
+
+        .card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 450px;
+            margin: auto;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input,
+        button {
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            width: 100%;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1e40af;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background: #f0f0f0;
+        }
+
+        .result {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <h2>Marksheet Generator</h2>
+
+        <!-- Only 3 inputs -->
+        <input id="name" placeholder="Enter Name">
+        <input id="class" placeholder="Enter Class">
+        <input id="roll" placeholder="Enter Roll No">
+        <button id="btn">Generate Marksheet</button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        // Sample data (Roll based)
+        const records = [
+            { name: "Mudassir Ali Khan", class: "10", roll: "1014", marks: { Math: 85, English: 78, Science: 90 } },
+            { name: "Ali Raza", class: "9", roll: "1001", marks: { Math: 72, English: 80, Science: 65 } },
+            { name: "Sara Ahmed", class: "10", roll: "1020", marks: { Math: 90, English: 95, Science: 88 } }
+        ];
+
+        const btn = document.getElementById("btn");
+        const result = document.getElementById("result");
+
+        btn.addEventListener("click", () => {
+            const name = document.getElementById("name").value.trim().toLowerCase();
+            const cls = document.getElementById("class").value.trim();
+            const roll = document.getElementById("roll").value.trim();
+
+            // Search by Roll or Name
+            const student = records.find(s => s.roll === roll || s.name.toLowerCase() === name);
+
+            if (!student) {
+                result.innerHTML = `<p style="color:red">No record found.</p>`;
+                return;
+            }
+
+            const marks = student.marks;
+            const total = Object.values(marks).reduce((a, b) => a + b, 0);
+            const percent = (total / (Object.keys(marks).length * 100) * 100).toFixed(2);
+
+            result.innerHTML = `
+      <h3>Marksheet</h3>
+      <p><strong>Name:</strong> ${student.name}</p>
+      <p><strong>Class:</strong> ${student.class}</p>
+      <p><strong>Roll No:</strong> ${student.roll}</p>
+
+      <table>
+        <tr><th>Subject</th><th>Marks</th></tr>
+        ${Object.entries(marks).map(([sub, mark]) => `<tr><td>${sub}</td><td>${mark}</td></tr>`).join('')}
+        <tr><th>Total</th><th>${total}</th></tr>
+      </table>
+
+      <p><strong>Percentage:</strong> ${percent}%</p>
+    `;
+        });
+    </script>
+
+</body>
+
+</html>
